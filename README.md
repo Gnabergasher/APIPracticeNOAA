@@ -1,2 +1,2 @@
 # APIPracticeNOAA
-Learning Pythong, Numpy, and the NOAA package
+Learning Python, Numpy, and the NOAA package
