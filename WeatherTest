@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from noaa_sdk import noaa
+import datetime, time
+n = noaa.NOAA()     # recommended API Usage per https://www.weather.gov/documentation/services-web-api#/
+
+ZIP = ''            #Enter 5 digit US ZIP code
+
+def forecast(ZIP):
+    x = n.get_forecasts(ZIP,'US',True)
+    return x
+  
+
+def bucket_data(key, forecast)    #converts 156 lines to a list of data & corresponidng quantity
+    list1 = []                    #blank list
+    for v in forecast:             
+        list1.append(v[key])      #iterates and adds key values to list
+    dict1 = {}                    #blank dictionary
+    for k in list1:               #Updates dictionary, iterates through adding quantity
+        if k in dict1:
+            dict1[k] += 1
+        else:
+            dict1[k] = 1
+    a = []                        #blank lists, dictionary broken into two lists
+    b = []
+    for k,v in dict1.items():
+        a.append(k)
+        b.append(v)
+    return [a,b]
+    
+def make_pie(key, forecast)
+    [a,b] = bucket_data(key, forecast)
+    plt.pie(a,labels=b,autopct = '%1.1f%%', shadow=True, radius=3)
+    plt.show
+    
+
+    
+    
