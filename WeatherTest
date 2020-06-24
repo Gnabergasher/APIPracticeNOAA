@@ -25,58 +25,11 @@ def bucket_data(key, forecast):      # converts 156 lines to a list of data & co
     
 def make_pie(key, forecast):        # pick a key, this will bucket & pie the data, needs full forecast()
     [a, b] = bucket_data(key, forecast)
+    plt.title(key)                  # can't forget to add a title
     plt.pie(b, labels=a, autopct='%1.1f%%', shadow=True, radius=1)  #adjust radius as needed, it's there so I don't forget
     plt.show()
 
 def make_pies(forecast):                                                                #makes several pie charts
     keys = ['isDaytime', 'temperature', 'windSpeed', 'windDirection', 'shortForecast']  #relevant to bucketed pie charts
     for k in keys:                                                                      
-        make_pie(k, forecast)
-        
-        
-        
-        
-import numpy as np
-import matplotlib.pyplot as plt
-from noaa_sdk import noaa
-import datetime, time
-
-n = noaa.NOAA()  # recommended API Usage per https://www.weather.gov/documentation/services-web-api#/
-
-
-def forecast(ZIP):  # calls NOAA API to get 156 hours of data across 13 points in dictionary
-    x = n.get_forecasts(ZIP, 'US', True)
-    return x
-
-
-def bucket_data(key, forecast):  # converts 156 lines to a list of data & corresponding quantity
-    list1 = []  # blank list
-    for v in forecast:
-        list1.append(v[key])  # iterates and adds key values to list
-    dict1 = {}  # blank dictionary
-    for k in list1:  # Updates dictionary, iterates through adding quantity
-        if k in dict1:
-            dict1[k] += 1
-        else:
-            dict1[k] = 1
-    key = []  # blank lists, dictionary broken into two lists
-    quantity = []
-    for k, v in dict1.items():
-        key.append(k)
-        quantity.append(v)
-    return [key, quantity]
-
-
-def make_pie(key, forecast):  # pick a key, this will bucket & pie the data, needs full forecast()
-    [a, b] = bucket_data(key, forecast)
-    plt.title(key)
-    plt.pie(b, labels=a, autopct='%1.1f%%', shadow=True, radius=1)  #
-    plt.show()
-
-
-
-
-def make_pies(forecast):
-    keys = ['isDaytime', 'temperature', 'windSpeed', 'windDirection', 'shortForecast']
-    for k in keys:
-        make_pie(k, forecast)
+        make_pie(k, forecast)       #makes a pie chart for each key, nom nom nom
